@@ -1,4 +1,4 @@
-#PARTE 1
+#PARTE 1.
 
 #1.Calcula los valores numéricos aproximados de
 

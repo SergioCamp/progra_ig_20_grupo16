@@ -1,0 +1,351 @@
+---
+title: "***Tarea 01***"
+author: "GRUPO 16"
+date: "*16/11/2021*"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<p style="font-family: times, serif; font-size:50pt; font-style:italic">
+    Tarea 01
+</p>
+
+> **Integrantes**
+>
+> --- *Campos Torres Sergio Junior*
+>
+> --- *Montero Navarro Adrian*
+>
+> --- *Pinedo Cienfuegos Diana Melissa*
+
+![IMAGEN](https://luiscavibotsample.s3-sa-east-1.amazonaws.com/assets/noticias/san-marcos-primer-lugar-webometrics.png)
+
+## Parte 1
+***1. Calcula los valores numéricos aproximados de***
+
+*a.*
+
+```{r}
+(0.3 * 0.15) / (0.3 * 0.15 + 0.2 * 0.8 + 0.5 * 0.12)
+```
+*b.*
+
+```{r}
+((5 ^ 6 )/(factorial(6)) ) *exp(-5)
+```
+*c.*
+
+```{r}
+(factorial(20)/(factorial(13)*factorial(7)))*0.4^7*0.6^13
+```
+***2. Realizar la siguiente suma***
+
+*a. 1+2+3+...+1000*
+
+```{r}
+sum(seq(1:1000))
+```
+*b. 1+2+4+8+16+...+1024*
+
+```{r}
+1+sum(2^seq(0:10))
+```
+***3. El vector grupo representa el grupo al que pertenece una serie de alumnos***
+
+*a. ¿Cuántos elementos tiene?*
+
+```{r}
+load(url("https://goo.gl/uDzU8v"))
+length(grupo)
+```
+*b. ¿En qué posiciones del vector está la letra “A?”*
+
+```{r}
+which(grupo=="A")
+```
+***4. El vector nota representa la nota de un examen de los alumnos que están en los grupos del vector grupo***
+
+*a. ¿Cuánto suman todas las notas?*
+
+```{r}
+sum(nota)
+```
+
+*b. ¿Cuál es la media aritmética de todas las notas?*
+
+```{r}
+mean(nota)
+```
+*c. ¿En qué posiciones están las notas mayores de 7.0?*
+```{r}
+which(nota>7)
+```
+*d. Visualiza las notas ordenadas de mayor a menor*
+```{r}
+notasordenadas<-order(nota,na.last=TRUE,decreasing=TRUE)
+nota[notasordenadas]
+```
+*e. ¿En qué posición está la nota máxima?*
+```{r}
+match(max(nota),nota)
+```
+***5. A partir de los vectores grupo y nota definidos.***
+
+```{r}
+v1=data.frame(grupo=c(grupo),nota=c(nota))
+```
+
+*a. Suma las notas de los 10 primeros alumnos del vector*
+```{r}
+sum(nota[1:10])
+```
+*b. ¿Cuántos alumnos hay del grupo C?*
+```{r}
+length(nota[grupo=='C'])
+```
+*c. Cuantos alumnos han aprobado*
+```{r}
+length(nota[nota>5])
+```
+*d. Cuantos alumnos del grupo B han aprobado*
+```{r}
+length(nota[grupo=='B'&nota>5])
+```
+*e. Porcentaje de alumnos del grupo C han aprobado*
+```{r}
+AprobadosC=c(length(nota[grupo=='C'&nota>5]))
+TotalC=length(nota[grupo=='C'])
+
+(AprobadosC/TotalC)*100
+```
+*f. De qué grupos son la máxima y mínima notas de toda la muestra*
+```{r}
+max(nota)
+min(nota)
+
+v1[v1$nota==max(nota),]
+v1[v1$nota==min(nota),]
+```
+*g. Nota media de los alumnos de grupo A y B, juntos, considerando sólo a los que han aprobado*
+```{r}
+mean(nota[grupo=='B'&nota>5])
+mean(nota[grupo=='A'&nota>5])
+
+mean(c(nota[grupo=='B'&nota>5],nota[grupo=='A'&nota>5]))
+```
+***6. Calcula el percentil 66 de las notas de todos los alumnos, y también de los alumnos del grupo C***
+
+```{r}
+quantile(nota, 66/100)
+```
+*Alumnos del grupo C*
+```{r}
+data.alumnos <- data.frame(grupo,nota) 
+soloC <- data.alumnos[(data.alumnos$grupo == "C"),]
+quantile(soloC$nota, 66/100)
+```
+***7. Un alumno tiene una nota de 4.9. ¿Qué porcentaje, del total de alumnos, tiene una nota menor o igual que la suya? ¿Y qué porcentaje tiene una nota mayor o igual que la suya?***
+```{r}
+MAYOR=length(nota[nota>=4.9])
+MENOR=length(nota[nota<=4.9])
+TOTAL=length(nota)
+
+(MAYOR/TOTAL)*100
+(MENOR/TOTAL)*100
+```
+```{r}
+(MENOR/TOTAL)*100
+```
+***8. Realiza el gráfico de diagramas de caja de las notas de cada grupo, para poder comparar el nivel de cada uno de ellos.***
+
+```{r}
+load(url("https://goo.gl/uDzU8v"))
+boxplot(nota~grupo)
+```
+
+***9. Si la variable conc recoge la concentración de plomo (en ppm) en el aire de cierta zona durante un día completo***
+
+```{r}
+H=c(0:23)
+ppm=c(30:53)
+conc<-data.frame(H,ppm)
+```
+
+*a. ¿Cuál ha sido la concentración máxima?*
+```{r}
+max(conc$ppm)
+```
+*b. En cuántos de los muestreos se ha superado la concentración de 40.0 ppm?*
+```{r}
+which(conc$ppm>40)
+```
+
+*c. ¿Cuál ha sido la concentración media del día?*
+```{r}
+mean(conc$ppm)
+```
+
+*d. ¿Cuáles fueron las 10 mediciones más bajas del día?*
+```{r}
+menconc=order(conc$ppm,na.last = TRUE,decreasing = TRUE)
+conc$ppm[tail(menconc, 10)]
+```
+*e. Si la primera medida fue a las 00:00. ¿A qué hora del día se alcanzó la concentración máxima?*
+
+```{r}
+conc
+seq(0,24-24/288,24/288)
+horas=c(seq(0,24-24/288,24/288))
+df_plomo=data.frame(conc, horas)
+df_plomo$horas[(max(conc)==df_plomo$conc)]
+```
+## Parte 2
+***1. Graficar los puntos (1,1),(2,4),(3,6),(4,8),(5,25),(6,36),(7,49),(8,61),(9,81),(10,100) en un plano usado Rstudio***
+
+```{r}
+abscisas<-c(1,2,3,4,5,6,7,8,9,10)
+ordenadas<-c(1,4,6,8,25,36,49,61,81,100)
+plot(x=abscisas,y=ordenadas)
+```
+***2. Ingresar la matriz A en RStudio***
+
+```{r}
+vect1<-c(1, 2, 3, 4, 2, 4, 6, 8, 3, 6, 9, 12)
+A=matrix(data = vect1, nrow = 4, ncol = 3)
+```
+***3. Ingresar la matriz identidad de tamaño 3***
+
+```{r}
+diag(1,3,3)
+diag(3)
+```
+***4. Crea una función que cree una matriz nula ingresando las dimensiones***
+```{r}
+matrixnula<-function(x,y) {
+  matrix(0,x,y)
+}
+```
+
+***5. Modificar la matriz diag(4), para que se parezca a la matriz B***
+```{r}
+vec3<-c(0, 2, 3, 4)
+diag(x =vec3, nrow = 4, ncol = 4)
+B=diag(x =vec3, nrow = 4, ncol = 4)
+```
+***6. Obtener la matriz transpuesta de A (ejercicio 2)***
+```{r}
+t(A)
+```
+***7. Realizar las siguientes operaciones A+B, A-B, 3B y AB***
+```{r}
+#Matriz A
+A=matrix(data = vect1, nrow = 4, ncol = 3)
+
+#Matriz B
+B=diag(x =vec3, nrow = 4, ncol = 4)
+
+#Las operaciones A+B, A-B Y AB no cumplen con las condiciones necesarias por tener diferente numero de columnas.
+
+3*B
+```
+***8. Crea una funciÃ³n para calcular P6***
+
+```{r}
+mt<-c(1,-2,1,2,4,0,3,-2,1)
+P<-matrix(mt,3)
+fun<- function(x){
+  (((((x%*%x)%*%x)%*%x)%*%x)%*%x)
+}
+fun(P)
+```
+***9. Resolver el sistema de ecuaciones***
+**3x-y+z=-1**
+**9x-2y+z=-9**
+**3x+y-2z=-9**
+
+```{r}
+A=cbind(c(3,9,3),c(-1,-2,1),c(1,1,-2))
+B=c(-1,-9,-9)
+solve(A,B)
+```
+***10. Utilizando la ayuda de R, investigue para qué sirven las funciones eigen() y det()***
+
+**Usando "help(det)" descubrimos que sirve para hallar por separado el modulo del determinante de una matriz**
+
+```{r}
+mtrx=matrix(c(0,2,1,4,1,3,2,0,1),3,3)
+det(mtrx)
+```
+**Usando "help(eigen)" descubrimos que sirve para hallar por separado los valores y vectores propios de una matriz**
+
+```{r}
+eigen(mtrx)
+```
+***11. Considerando las matrices A Y B, hallar BA-BA^t***
+
+```{r}
+v <- (1:10)
+v2 <- v*2
+v3 <- v*3
+v4 <- v*4
+v5 <- v*5
+B <- matrix(c(v,v2,v3,v4,v5),10)
+X <- c(0,1,0,0,1,1,0,1,1,0,0,1,0,0,1,1,0,1,0,1,0,1,0,1,0)
+A <- matrix(X,5)
+B%*%A - B%*%t(A)
+```
+***12. Considere  β = ( X^t * X )^-1 * X^t * Y***
+```{r}
+x<-matrix(c(1,1,1,1,1,1,-1,0,1,2),nrow=5,ncol=2)
+y<-matrix(c(0,0,1,1,3),nrow = 5,ncol = 1)
+
+#Las operacion correcta seria "(solve(t(x)%%x)%%t(x))%*%y" no cumplen con las condiciones necesarias debido a que sus dimensiones no son las adecuadas para definir la operación
+```
+
+***13. Corre el siguiente código para cargar los vectores year y co2 en memoria***
+```{r}
+data(co2)
+means = aggregate(co2, FUN=mean)
+year = as.vector(time(means))
+co2 = as.vector(means)
+```
+
+*a. El vector co2 contiene medidas de CO2 en la atmósfera, en unidades de ppm, durante el periodo 1959-1997. El vector year contiene sus años correspondientes*
+```{r}
+co2
+year
+```
+*b. Calcular un vector de diferencias de CO2 entre años consecutivos, que sería:*
+*CO2 en 1960 menos CO2 en 1959*
+*CO2 en 1961 menos CO2 en 1960*
+*y así sucesivamente…*
+```{r}
+diff(co2)
+y <- c(0,diff(co2))
+y
+```
+*c. Crear un plot con lineas y puntos mostrando las diferencias consecutivas de CO2 en función del tiempo (1960, 1961, etc…), en negrita*
+```{r}
+plot(year, y, type="o", pch=20, xlab="años", ylab="diferencia de concentración de co2", main="Diferencia de co2 entre dos años consecutivos", col="blue", font=2)
+```
+*d. La diferencia de concentración de CO2 entre 2020 y 2019 fue igual a 2.64. Agregar un punto rojo representando esa diferencia al plot ya creado (usar una forma diferente, como pch=4)*
+```{r}
+plot(year, y, xlim=c(1956, 2020), type="o", pch=20, xlab="años", ylab="diferencia de concentración de co2", main="Diferencia de co2 entre dos años consecutivos", col="blue", font=2)
+points(2020, 2.64, pch=4, col="red")
+```
+
+***14. Lee el archivo rainfall.csv como un data.frame. Calcula e imprime un vector con los nombres de las estaciones donde al menos uno de los meses tiene una precipitaciÃ³n superior a 180mm***
+```{r}
+df=read.csv("D:/Progra/rainfall.csv")
+
+df[(df$sep>180)|(df$oct>180)|(df$nov>180)|(df$dec>180)|(df$jan>180)|(df$feb>180)|(df$mar>180)|(df$apr>180)|(df$may>180),]
+
+M=df[(df$sep>180)|(df$oct>180)|(df$nov>180)|(df$dec>180)|(df$jan>180)|(df$feb>180)|(df$mar>180)|(df$apr>180)|(df$may>180),]
+
+c((M$name))
+```
+![IMAGEN](https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F021%2F807%2Fig9OoyenpxqdCQyABmOQBZDI0duHk2QZZmWg2Hxd4ro.jpg)
+
