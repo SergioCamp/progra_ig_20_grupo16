@@ -17,6 +17,8 @@ Tarea 01
 
 ![IMAGEN](https://luiscavibotsample.s3-sa-east-1.amazonaws.com/assets/noticias/san-marcos-primer-lugar-webometrics.png)
 
+![IMAGEN](D:/productoria.jpeg)
+
 ## Parte 1
 
 ***1. Calcula los valores numéricos aproximados de***

@@ -1,0 +1,200 @@
+---
+title: "TAREA 02"
+author: "Grupo 16"
+date: "24/11/2021"
+output: github_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<p style="font-family: times, serif; font-size:50pt; font-style:italic">
+    Tarea 02
+</p>
+
+> **Integrantes**
+>
+> --- *Campos Torres Sergio Junior*
+>
+> --- *Montero Navarro Adrian*
+>
+> --- *Pinedo Cienfuegos Diana Melissa*
+
+![IMAGEN](https://luiscavibotsample.s3-sa-east-1.amazonaws.com/assets/noticias/san-marcos-primer-lugar-webometrics.png)
+
+***1. ¿Qué cantidad de dinero sobra al repartir 10000$ entre 3 personas?***
+
+```{r}
+10000%%3
+```
+
+***2. ¿Es el número 4560 divisible por 3?***
+
+```{r}
+0== 4560%%3
+```
+
+***3. Construya un vector con los números enteros del 2 al 87. ¿Cuáles de esos números son divisibles por 7?***
+
+```{r}
+input = 2:87
+multiplo_7 = (input %% 7) == 0
+input[multiplo_7]
+```
+
+***4. Construya dos vectores, el primero con los números enteros desde 7 hasta 3, el segundo vector con los primeros cinco números positivos divisibles por 5.***
+
+*-Sea A la condición de ser par en el primer vector.*
+
+*-Sea B la condición de ser mayor que 10 en el segundo vector.*
+
+*-¿En cuál de las 5 posiciones se cumple A y B simultáneamente?*
+```{r}
+X <- c(3:7)
+Y <- c(1:5*5)
+input = X
+A = (X %% 2) == 0
+input[A]
+Y[Y > 10]
+Z <- c(input[A],Y[Y >10])
+min(which(Z>10 & (Z %% 2) == 0))
+
+```
+
+***5. Consulte este link en el cual hay una anéctoda de Gauss niño. Use R para obtener el resultado de la suma solicitada por el profesor del niño Gauss.***
+
+```{r}
+sum(seq(1:100))
+Gauss <- function(x) {
+(x*(x+1))/2
+} 
+Gauss(100)
+```
+
+***6. Construya un vector con los siguientes elementos: 1, -4, 5, 9, -4. Escriba un procedimiento para extraer las posiciones donde está el valor mínimo en el vector.***
+
+```{r}
+A <- c(1, -4, 5, 9, -4)
+which(A==min(A))
+```
+
+***7. Calcular 8!***
+
+```{r}
+factorial(8)
+```
+
+***8. Evaluar la siguiente sumatoria***
+![IMAGEN](C:/Users/edgar/Downloads/8.jpeg)
+```{r}
+ocho<-function(i){
+  (exp(i))
+}
+sum(ocho(3:7)) 
+```
+
+***9. Evaluar la siguiente productoria***
+![IMAGEN](C:/Users/edgar/Downloads/9.jpeg)
+```{r}
+1/2*log(c(1:10),10)
+M <- 1/2*log(c(1:10),10)
+prod(M)
+```
+
+***10. Realizar una función que permita calcular el área de una corona circular.***
+![IMAGEN](C:/Users/edgar/Downloads/10.jpeg)
+```{r}
+#Área sombreada: 1/2Rs - 1/2cd
+
+areacorona<-function(R,s,c,d){
+  0.5*(R*s-c*d)
+}
+```
+
+***11. Construya un vector cualquiera e inviertalo, es decir, que el primer elemento quede de último, el segundo de penúltimo y así sucesivamente. Compare su resultado con el de la función rev***
+
+```{r}
+V5 <- seq(0,25,5)
+V5invert <- c(25,20,15,10,5,0)
+rev(V5)
+```
+
+***12. Calcular lo siguiente***
+![IMAGEN](C:/Users/edgar/Downloads/12.jpeg)
+```{r}
+probl12<-function(i){
+  (i^3+4*i^2)
+}
+sum(probl12(10:100)) 
+```
+
+***13. Calcular lo siguiente P25***
+![IMAGEN](C:/Users/edgar/Downloads/13.jpeg)
+```{r}
+problem13<-function(i){
+  (2^(i)/i)+(3^(i)/i^(2))
+}
+sum(problem13(1:25))
+```
+
+***14. Lea el siguiente archivo***
+
+*a. Calcular el número de variables del datase*
+```{r}
+Paises <- read.delim("https://raw.githubusercontent.com/fhernanb/datos/master/Paises.txt")
+ncol(Paises)
+```
+*b. ¿Cuántos países hay en el dataset?*
+```{r}
+nrow(Paises)
+```
+*c. ¿Cuál es el país con mayor población?*
+```{r}
+Paises$Pais[match(max(Paises$poblacion),Paises$poblacion)]
+```
+*d. ¿Cuál es el país con alfabetización más baja?*
+```{r}
+Paises$Pais[match(min(Paises$alfabetizacion), Paises$alfabetizacion)]
+```
+
+
+***15. En R hay unas bases de datos incluídas, una de ellas es la base de datos llamada mtcars. Para conocer las variables que están en mtcars usted puede escribir en la consola ?mtcars o también help(mtcars). De la base mtcars obtenga bases de datos que cumplan las siguientes condiciones.***
+
+*a. Autos que tengan un rendimiento menor a 18 millas por galón de combustible.*
+
+```{r}
+mtcars[(mtcars$mpg<18),]
+X <- mtcars[(mtcars$mpg<18),]
+row.names(X)
+```
+*b. Autos que tengan 4 cilindros.*
+
+```{r}
+mtcars[(mtcars$cyl == 4),]
+Y <- mtcars[(mtcars$cyl == 4),]
+row.names(Y)
+```
+*c. Autos que pesen más de 2500 libras y tengan transmisión manual.*
+
+```{r}
+mtcars[(mtcars$wt>2.500 & mtcars$am==1),]
+Z <- mtcars[(mtcars$wt>2.500 & mtcars$am==1),]
+row.names(Z)
+```
+
+***16. La ecuación de tiempo es la diferencia entre el tiempo solar medio y el tiempo solar aparente (Referencia). Si bien esta varía, la forma analítica de esta ecuación se muestra a continuación (Usar x como un rango de 0 a 365). Replicar el gráfico::***
+
+![IMAGEN](C:/Users/edgar/Downloads/16.jpeg)
+```{r}
+x=c(0:365)
+y=c(2*pi*(x-81)/365)
+fy=c(9.87*sin(2*y)-7.53*cos(y)-1.5*sin(y))
+plot(fy, type="l",lty="33",lwd="2", axes=TRUE, las=1, pch=20, yaxp=c(-12,18,5),xaxp = c(0, 365, 12),xaxt="n", xlab="", ylab="Minutos", col="red", font=2)
+
+title(main="Ecuación del tiempo
+Mathematical Astronomy Morsels, Jean Meeus. 1997", adj=0, line=0.5, cex.main=1)
+title(sub="Realizado por grupo 16", adj=1, line = 2.5, cex.sub=0.8)
+
+axis(1, at = seq(0, 365, by=30.4),
+     labels = c("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre","Enero"), cex.axis=0.45)
+
+```
